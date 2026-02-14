@@ -17,17 +17,5 @@ export default defineNuxtConfig({
   },
   
   // Импорт глобальных стилей
-  css: ['~/app/assets/css/main.scss'],
-  
-  // Настройка SCSS для глобального доступа к функциям
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          // Автоматически импортирует функции во все SCSS файлы
-          additionalData: `@use "~/app/assets/css/functions.scss" as *;`
-        }
-      }
-    }
-  }
+  css: ['~/app/assets/css/main.scss']
 })
