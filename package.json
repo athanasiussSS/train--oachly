@@ -21,6 +21,8 @@
     "@storybook/addon-docs": "^10.2.8",
     "@storybook/vue3": "^10.2.8",
     "@storybook/vue3-vite": "^10.2.8",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "sass": "^1.97.3",
     "storybook": "^10.2.8"
   }
 }
