@@ -5,8 +5,8 @@
     justify-content: center;
     gap: 8px;
     border: none;
-    font-family: inherit;
-    font-weight: 500;
+    font-family: var(--font-family-primary, 'Inter', Arial, sans-serif);
+    font-weight: 300;
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;

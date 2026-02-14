@@ -17,5 +17,5 @@ export default defineNuxtConfig({
   },
   
   // Импорт глобальных стилей
-  css: ['~/app/assets/css/main.css']
+  css: ['~/app/assets/css/main.scss']
 })
