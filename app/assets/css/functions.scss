@@ -1,0 +1,43 @@
+// SCSS функции для работы с единицами измерения
+
+// Базовый размер шрифта (по умолчанию 16px)
+$base-font-size: 16px !default;
+
+// Основная функция rem() - адаптивная конвертация px в rem
+// rem(124) - на десктопе будет 124px (7.75rem), на мобильных адаптивно уменьшается
+// Использует CSS clamp() для плавной адаптивности
+// 
+// Параметры:
+//   $pixels - значение в пикселях (обязательный)
+//   $min-scale - коэффициент уменьшения на мобильных (по умолчанию 0.75 = 75%)
+//   $max-scale - коэффициент для десктопа (по умолчанию 1 = 100%)
+//   $min-width - минимальная ширина viewport (по умолчанию 320px)
+//   $max-width - максимальная ширина viewport (по умолчанию 1920px)
+@function rem($pixels, $min-scale: 0.75, $max-scale: 1, $min-width: 320px, $max-width: 1920px) {
+  $base: $base-font-size;
+  
+  // Конвертируем значения в rem
+  $min-rem: ($pixels * $min-scale / $base);
+  $max-rem: ($pixels * $max-scale / $base);
+  $base-rem: ($pixels / $base);
+  
+  // Вычисляем разницу
+  $diff: $max-rem - $min-rem;
+  $width-diff: $max-width - $min-width;
+  
+  // Возвращаем clamp() с формулой для плавной адаптивности
+  // На десктопе (1920px+) будет $max-rem
+  // На мобильных (320px) будет $min-rem
+  // Между ними плавно меняется
+  @return clamp(
+    #{$min-rem}rem,
+    #{$base-rem}rem + (#{$diff} * ((100vw - #{$min-width}) / #{$width-diff})),
+    #{$max-rem}rem
+  );
+}
+
+// Упрощенная версия - просто конвертирует px в rem без адаптивности
+// rem-simple(124) = 7.75rem (124 / 16)
+@function rem-simple($pixels, $base: $base-font-size) {
+  @return ($pixels / $base) * 1rem;
+}
