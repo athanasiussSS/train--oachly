@@ -1,0 +1,348 @@
+/* Базовые стили */
+.text-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-family: var(--font-family-primary);
+  transition: all var(--transition-base);
+  color: #000;
+}
+
+/* Input элемент */
+.text-input__input {
+  flex: 1;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-weight: var(--font-weight-normal);
+  line-height: 1.5;
+  transition: all var(--transition-base);
+
+  &::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &:readonly {
+    cursor: default;
+  }
+}
+
+/* Иконка слева */
+.text-input__left-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-base);
+}
+
+/* Контент справа */
+.text-input__right-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+/* Кнопка очистки */
+.text-input__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 0.5rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+  color: #000;
+
+  &:hover {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.text-input__clear-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  font-weight: var(--font-weight-medium);
+}
+
+/* Дополнительный контент */
+.text-input__additional {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* Сообщение об ошибке */
+.text-input__error-message {
+  margin-top: 0.375rem;
+  color: var(--color-danger);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
+/* ============================================
+   РАЗМЕРЫ
+   ============================================ */
+
+.text-input--s {
+  .text-input__input {
+    padding: 0.5rem 0.75rem;
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  .text-input__left-icon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  &.text-input--has-left-icon .text-input__input {
+    padding-left: 0.5rem;
+  }
+
+  &.text-input--has-right-content .text-input__input,
+  &.text-input--has-clear .text-input__input,
+  &.text-input--has-additional .text-input__input {
+    padding-right: 0.5rem;
+  }
+}
+
+.text-input--m {
+  .text-input__input {
+    padding: 0.625rem 1rem;
+    font-size: var(--font-size-base);
+    border-radius: var(--radius-md);
+  }
+
+  .text-input__left-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem;
+  }
+
+  &.text-input--has-left-icon .text-input__input {
+    padding-left: 0.75rem;
+  }
+
+  &.text-input--has-right-content .text-input__input,
+  &.text-input--has-clear .text-input__input,
+  &.text-input--has-additional .text-input__input {
+    padding-right: 0.75rem;
+  }
+}
+
+.text-input--l {
+  .text-input__input {
+    padding: 0.75rem 1.25rem;
+    font-size: var(--font-size-lg);
+    border-radius: var(--radius-lg);
+  }
+
+  .text-input__left-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 1rem;
+  }
+
+  &.text-input--has-left-icon .text-input__input {
+    padding-left: 1rem;
+  }
+
+  &.text-input--has-right-content .text-input__input,
+  &.text-input--has-clear .text-input__input,
+  &.text-input--has-additional .text-input__input {
+    padding-right: 1rem;
+  }
+}
+
+.text-input--xl {
+  .text-input__input {
+    padding: 1rem 1.5rem;
+    font-size: var(--font-size-xl);
+    border-radius: var(--radius-xl);
+  }
+
+  .text-input__left-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 1.25rem;
+  }
+
+  &.text-input--has-left-icon .text-input__input {
+    padding-left: 1.25rem;
+  }
+
+  &.text-input--has-right-content .text-input__input,
+  &.text-input--has-clear .text-input__input,
+  &.text-input--has-additional .text-input__input {
+    padding-right: 1.25rem;
+  }
+}
+
+/* ============================================
+   ВАРИАНТЫ
+   ============================================ */
+
+/* Normal вариант */
+.text-input--normal {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: inherit;
+
+  &:hover:not(.text-input--disabled):not(.text-input--readonly) {
+    border-color: var(--color-text-secondary);
+  }
+
+  &.text-input--focused:not(.text-input--disabled) {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &.text-input--disabled {
+    background-color: var(--color-bg-tertiary);
+    border-color: var(--color-border);
+    cursor: not-allowed;
+  }
+
+  &.text-input--readonly {
+    background-color: var(--color-bg-secondary);
+    border-color: var(--color-border);
+  }
+}
+
+/* Clear вариант */
+.text-input--clear {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0;
+
+  &:hover:not(.text-input--disabled):not(.text-input--readonly) {
+    border-bottom-color: var(--color-text-secondary);
+  }
+
+  &.text-input--focused:not(.text-input--disabled) {
+    border-bottom-color: var(--color-primary);
+    border-bottom-width: 2px;
+  }
+
+  &.text-input--disabled {
+    border-bottom-color: var(--color-border);
+    opacity: 0.6;
+  }
+
+  &.text-input--readonly {
+    border-bottom-color: var(--color-border);
+  }
+}
+
+/* ============================================
+   СОСТОЯНИЯ
+   ============================================ */
+
+/* Suggest состояние */
+.text-input--normal.text-input--suggest {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.05);
+}
+
+/* Hover состояние */
+.text-input--normal:hover:not(.text-input--disabled):not(.text-input--readonly) {
+  border-color: var(--color-text-secondary);
+}
+
+/* Active/Focused состояние */
+.text-input--normal.text-input--focused:not(.text-input--disabled) {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Disabled состояние */
+.text-input--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+
+  .text-input__input {
+    cursor: not-allowed;
+  }
+}
+
+/* Inline Error */
+.text-input--error-inline {
+  &.text-input--normal {
+    border-color: var(--color-danger);
+  }
+
+  &.text-input--clear {
+    border-bottom-color: var(--color-danger);
+  }
+
+  &.text-input--focused {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+}
+
+/* Outline Error */
+.text-input--error-outline {
+  &.text-input--normal {
+    border-color: var(--color-danger);
+    border-width: 2px;
+  }
+
+  &.text-input--clear {
+    border-bottom-color: var(--color-danger);
+    border-bottom-width: 2px;
+  }
+
+  &.text-input--focused {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+}
+
+/* ============================================
+   АДАПТИВНОСТЬ
+   ============================================ */
+
+@media (max-width: 768px) {
+  .text-input--xl {
+    .text-input__input {
+      padding: 0.875rem 1.25rem;
+      font-size: var(--font-size-lg);
+    }
+  }
+}
