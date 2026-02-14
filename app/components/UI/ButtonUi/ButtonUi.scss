@@ -1,134 +1,228 @@
 /* Базовые стили */
 .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    border: none;
-    font-family: var(--font-family-primary, 'Inter', Arial, sans-serif);
-    font-weight: 300;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    user-select: none;
-  }
-  
-  /* Размеры */
-  .btn--xs { padding: 0.25rem 0.625rem; font-size: 0.75rem; }
-  .btn--sm { padding: 0.375rem 0.875rem; font-size: 0.875rem; }
-  .btn--md { padding: 0.625rem 1.25rem; font-size: 1rem; }
-  .btn--lg { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
-  .btn--xl { padding: 1rem 2rem; font-size: 1.25rem; }
-  
-  /* Только иконка (круглая) */
-  .btn--icon-only {
-    width: auto;
-    padding: 0.625rem;
-    border-radius: 50%;
-  }
-  
-  /* Форма углов */
-  .btn--round { border-radius: 62.4375rem; }
-  .btn--brick { border-radius: 0; }
-  .btn--circle { border-radius: 50%; }
-  .btn--square { border-radius: 0.25rem; }
-  
-  /* Варианты */
-  .btn--primary {
-    background-color: #3b82f6;
-    color: white;
-  }
-  .btn--primary:hover:not(.btn--disabled) {
-    background-color: #2563eb;
-  }
-  
-  .btn--secondary {
-    background-color: #9e9e9e;
-    color: white;
-  }
-  .btn--secondary:hover:not(.btn--disabled) {
-    background-color: rgb(133, 133, 133);
-  }
-  
-  .btn--outline {
-    background-color: transparent;
-    border: 0.125rem solid #3b82f6;
-    color: #3b82f6;
-  }
-  .btn--outline:hover:not(.btn--disabled) {
-    background-color: #3b82f6;
-    color: white;
-  }
-  
-  .btn--text {
-    background-color: transparent;
-    color: #3b82f6;
-  }
-  .btn--text:hover:not(.btn--disabled) {
-    background-color: rgba(59, 130, 246, 0.1);
-  }
-  
-  .btn--danger {
-    background-color: #ef4444;
-    color: white;
-  }
-  .btn--danger:hover:not(.btn--disabled) {
-    background-color: #dc2626;
-  }
-  
-  .btn--success {
-    background-color: #10b981;
-    color: white;
-  }
-  .btn--success:hover:not(.btn--disabled) {
-    background-color: #059669;
-  }
-  
-  .btn--warning {
-    background-color: #f59e0b;
-    color: white;
-  }
-  .btn--warning:hover:not(.btn--disabled) {
-    background-color: #d97706;
-  }
-  
-  .btn--info {
-    background-color: #06b6d4;
-    color: white;
-  }
-  .btn--info:hover:not(.btn--disabled) {
-    background-color: #0891b2;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  font-family: var(--font-family-primary, 'Inter', Arial, sans-serif);
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Размеры */
+.btn--xs { padding: 0.25rem 0.625rem; font-size: 0.75rem; }
+.btn--sm { padding: 0.375rem 0.875rem; font-size: 0.875rem; }
+.btn--md { padding: 0.625rem 1.25rem; font-size: 1rem; }
+.btn--lg { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
+.btn--xl { padding: 1rem 2rem; font-size: 1.25rem; }
+
+/* Только иконка (круглая) */
+.btn--icon-only {
+  width: auto;
+  padding: 0.625rem;
+  border-radius: 50%;
+}
+
+/* Форма углов */
+.btn--round { border-radius: 62.4375rem; }
+.btn--brick { border-radius: 0; }  /* Острые углы, может иметь обводку */
+.btn--clear { 
+  border-radius: 0; 
+  border: none !important;  /* Острые углы БЕЗ обводки */
+}
+.btn--circle { border-radius: 50%; }
+
+/* Варианты кнопок */
+
+/* Акцентные */
+.btn--action {
+  background-color: #3b82f6;
+  color: white;
+}
+.btn--action:hover:not(.btn--disabled) {
+  background-color: #2563eb;
+}
+
+.btn--outlined-action {
+  background-color: transparent;
+  border: 0.125rem solid #3b82f6;
+  color: #3b82f6;
+}
+.btn--outlined-action:hover:not(.btn--disabled) {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn--flat-action {
+  background-color: transparent;
+  color: #3b82f6;
+}
+.btn--flat-action:hover:not(.btn--disabled) {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Основные */
+.btn--primary {
+  background-color: #3b82f6;
+  color: white;
+}
+.btn--primary:hover:not(.btn--disabled) {
+  background-color: #2563eb;
+}
+
+.btn--outlined {
+  background-color: transparent;
+  border: 0.125rem solid #3b82f6;
+  color: #3b82f6;
+}
+.btn--outlined:hover:not(.btn--disabled) {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn--flat {
+  background-color: transparent;
+  color: #3b82f6;
+}
+.btn--flat:hover:not(.btn--disabled) {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.btn--flat-secondary {
+  background-color: transparent;
+  color: #6b7280;
+}
+.btn--flat-secondary:hover:not(.btn--disabled) {
+  background-color: rgba(107, 114, 128, 0.1);
+}
+
+/* Семантические */
+.btn--info {
+  background-color: #06b6d4;
+  color: white;
+}
+.btn--info:hover:not(.btn--disabled) {
+  background-color: #0891b2;
+}
+
+.btn--success {
+  background-color: #10b981;
+  color: white;
+}
+.btn--success:hover:not(.btn--disabled) {
+  background-color: #059669;
+}
+
+.btn--warning {
+  background-color: #f59e0b;
+  color: white;
+}
+.btn--warning:hover:not(.btn--disabled) {
+  background-color: #d97706;
+}
+
+.btn--danger {
+  background-color: #ef4444;
+  color: white;
+}
+.btn--danger:hover:not(.btn--disabled) {
+  background-color: #dc2626;
+}
+
+/* Приподнятые */
+.btn--raised {
+  background-color: #3b82f6;
+  color: white;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+.btn--raised:hover:not(.btn--disabled) {
+  background-color: #2563eb;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Контрастные */
+.btn--contrast {
+  background-color: #ffffff;
+  color: #1f2937;
+  border: 0.125rem solid #ffffff;
+}
+.btn--contrast:hover:not(.btn--disabled) {
+  background-color: #f9fafb;
+  border-color: #f9fafb;
+}
+
 /* Состояния */
 .btn:active:not(.btn--disabled) {
   filter: brightness(0.9);
 }
-  
-  .btn--disabled,
-  .btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  
-  /* Лоадер */
-  .btn__loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 1rem;
-    height: 1rem;
-    border: 0.125rem solid currentColor;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  /* На всю ширину */
-  .btn--block {
-    width: 100%;
-  }
+
+.btn--disabled,
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Лоадер */
+.btn--loading {
+  position: relative;
+}
+
+.btn--loading > *:not(.btn__loader) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.btn__loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1rem;
+  height: 1rem;
+  border: 0.125rem solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Ширина */
+.btn--width-auto {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn--width-max {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Состояние selected */
+.btn--selected {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn--selected.btn--outlined,
+.btn--selected.btn--outlined-action {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.btn--selected.btn--flat,
+.btn--selected.btn--flat-action,
+.btn--selected.btn--flat-secondary {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}

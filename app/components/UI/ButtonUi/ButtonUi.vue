@@ -8,7 +8,9 @@
             { 
                 'btn--loading': loading,
                 'btn--disabled': disabled,
-                'btn--block': block,
+                'btn--selected': selected,
+                'btn--width-auto': width === 'auto',
+                'btn--width-max': width === 'max',
                 'btn--icon-only': icon && iconPosition === 'only'
             }
         ]"
@@ -39,21 +41,38 @@
 interface Props {
     // Тип кнопки
     variant?:     
-    | 'primary'    // Основная
-    | 'secondary'  // Второстепенная
+    // Акцентные
+    | 'action'           // Action (высший приоритет)
+    | 'outlined-action'  // Outlined Action (средний приоритет)
+    | 'flat-action'      // Flat Action (низкий приоритет)
+    // Основные
+    | 'primary'          // Normal (обычные действия)
+    | 'outlined'         // Outlined (средний приоритет)
+    | 'flat'             // Flat (низкий приоритет)
+    | 'flat-secondary'   // Flat Secondary (второстепенные операции)
+    // Семантические
+    | 'info'             // Info (информация, подсказки)
+    | 'success'          // Success (успешные действия)
+    | 'warning'          // Warning (предупреждения)
+    | 'danger'           // Danger (разрушительные действия)
+    // Приподнятые
+    | 'raised'           // Raised (выделение важных действий)
+    // Контрастные
+    | 'contrast'         // Contrast (на сложном фоне)
 
     // Размер
-    size?: 'xs' | 'sm' | 'md'
+    size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
     // Форма углов
-    pin?: 'round' | 'brick' | 'circle' | 'square'
+    pin?: 'round' | 'brick' | 'clear' | 'circle'
     
     // Состояния
     loading?: boolean
     disabled?: boolean
+    selected?: boolean
     
     // Ширина
-    block?: boolean
+    width?: 'auto' | 'max'  // auto - ограничивает размеры, max - на всю ширину
     
     // Иконка
     icon?: string
@@ -66,7 +85,8 @@ const props = withDefaults(defineProps<Props>(), {
     pin: 'round',
     loading: false,
     disabled: false,
-    block: false,
+    selected: false,
+    width: undefined,
     iconPosition: 'left'
 })
 
