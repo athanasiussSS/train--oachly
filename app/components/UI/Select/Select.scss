@@ -1,0 +1,602 @@
+/* Базовые стили */
+.select-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--font-family-primary);
+  position: relative;
+}
+
+.select {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--font-family-primary);
+  transition: all var(--transition-base);
+  color: #000;
+}
+
+/* Label */
+.select__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+
+/* Триггер */
+.select__trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-weight: var(--font-weight-normal);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  user-select: none;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Значение */
+.select__value {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.select__value--placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Шеврон */
+.select__chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  color: var(--color-text-secondary);
+  transition: transform var(--transition-base);
+  width: 1rem;
+  height: 1rem;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.select__chevron--open {
+  transform: rotate(180deg);
+}
+
+/* Кнопка очистки */
+.select__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 0.5rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+  z-index: 1;
+
+  &:hover {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.select__clear-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  font-weight: var(--font-weight-medium);
+}
+
+/* Иконка ошибки (inline) */
+.select__error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 0.5rem;
+  color: var(--color-danger);
+  cursor: help;
+  z-index: 1;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  // Если есть кнопка очистки, сдвигаем иконку ошибки
+  .select--has-clear & {
+    margin-left: 0.25rem;
+  }
+}
+
+/* Дополнительный контент */
+.select__additional {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  z-index: 1;
+}
+
+/* Hint (подсказка) */
+.select__hint {
+  margin-top: 0.375rem;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
+/* Сообщение об ошибке (outline) */
+.select__error-message {
+  margin-top: 0.375rem;
+  color: var(--color-danger);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
+/* Dropdown */
+.select__dropdown {
+  position: absolute;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  overflow-y: auto;
+  max-height: 300px;
+  z-index: 1000;
+  margin-top: 0.25rem;
+}
+
+/* Опция */
+.select__option {
+  display: flex;
+  align-items: center;
+  padding: 0.625rem 1rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+
+  &:hover:not(.select__option--disabled):not(.select__option--empty) {
+    background-color: var(--color-bg-secondary);
+  }
+
+  &.select__option--focused:not(.select__option--disabled) {
+    background-color: var(--color-bg-secondary);
+  }
+
+  &.select__option--selected:not(.select__option--disabled) {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-medium);
+  }
+
+  &.select__option--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.select__option--empty {
+    padding: 1rem;
+    text-align: center;
+    color: var(--color-text-muted);
+    cursor: default;
+  }
+}
+
+/* Чекбокс для multiple */
+.select__option-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-primary);
+  transition: all var(--transition-fast);
+
+  svg {
+    width: 100%;
+    height: 100%;
+    stroke: var(--color-primary);
+  }
+
+  .select__option--selected & {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+
+    svg {
+      stroke: white;
+    }
+  }
+}
+
+.select__option-label {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Анимация dropdown */
+.select-dropdown-enter-active,
+.select-dropdown-leave-active {
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.select-dropdown-enter-from {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+}
+
+.select-dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+}
+
+/* ============================================
+   РАЗМЕРЫ
+   ============================================ */
+
+.select--s {
+  .select__trigger {
+    padding: 0.375rem 0.75rem;
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-sm);
+    min-height: 24px;
+  }
+
+  &.select--has-clear .select__trigger,
+  &.select--has-additional .select__trigger {
+    padding-right: 2.5rem;
+  }
+
+  .select__clear {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .select__error-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .select__chevron {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .select__additional {
+    bottom: 0.375rem;
+    right: 0.375rem;
+  }
+}
+
+.select--m {
+  .select__trigger {
+    padding: 0.5rem 1rem;
+    font-size: var(--font-size-base);
+    border-radius: var(--radius-md);
+    min-height: 28px;
+  }
+
+  &.select--has-clear .select__trigger,
+  &.select--has-additional .select__trigger {
+    padding-right: 2.75rem;
+  }
+
+  .select__clear {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .select__error-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .select__chevron {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .select__additional {
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+}
+
+.select--l {
+  .select__trigger {
+    padding: 0.625rem 1.25rem;
+    font-size: var(--font-size-lg);
+    border-radius: var(--radius-lg);
+    min-height: 36px;
+  }
+
+  &.select--has-clear .select__trigger,
+  &.select--has-additional .select__trigger {
+    padding-right: 3rem;
+  }
+
+  .select__clear {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .select__error-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .select__chevron {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .select__additional {
+    bottom: 0.625rem;
+    right: 0.625rem;
+  }
+}
+
+.select--xl {
+  .select__trigger {
+    padding: 0.75rem 1.5rem;
+    font-size: var(--font-size-xl);
+    border-radius: var(--radius-xl);
+    min-height: 44px;
+  }
+
+  &.select--has-clear .select__trigger,
+  &.select--has-additional .select__trigger {
+    padding-right: 3.5rem;
+  }
+
+  .select__clear {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .select__error-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .select__chevron {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .select__additional {
+    bottom: 0.75rem;
+    right: 0.75rem;
+  }
+}
+
+/* Размеры dropdown */
+.select__dropdown--s {
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-sm);
+
+  .select__option {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+.select__dropdown--m {
+  font-size: var(--font-size-base);
+  border-radius: var(--radius-md);
+
+  .select__option {
+    padding: 0.625rem 1rem;
+  }
+}
+
+.select__dropdown--l {
+  font-size: var(--font-size-lg);
+  border-radius: var(--radius-lg);
+
+  .select__option {
+    padding: 0.75rem 1.25rem;
+  }
+}
+
+.select__dropdown--xl {
+  font-size: var(--font-size-xl);
+  border-radius: var(--radius-xl);
+
+  .select__option {
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+/* ============================================
+   ВАРИАНТЫ
+   ============================================ */
+
+/* Normal вариант */
+.select--normal {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: inherit;
+
+  &:hover:not(.select--disabled) {
+    border-color: var(--color-text-secondary);
+  }
+
+  &.select--open:not(.select--disabled) {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &.select--disabled {
+    background-color: var(--color-bg-tertiary);
+    border-color: var(--color-border);
+    cursor: not-allowed;
+  }
+}
+
+/* Clear вариант */
+.select--clear {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0;
+
+  &:hover:not(.select--disabled) {
+    border-bottom-color: var(--color-text-secondary);
+  }
+
+  &.select--open:not(.select--disabled) {
+    border-bottom-color: var(--color-primary);
+    border-bottom-width: 2px;
+  }
+
+  &.select--disabled {
+    border-bottom-color: var(--color-border);
+    opacity: 0.6;
+  }
+}
+
+/* ============================================
+   СОСТОЯНИЯ
+   ============================================ */
+
+/* Hover состояние */
+.select--normal:hover:not(.select--disabled) {
+  border-color: var(--color-text-secondary);
+}
+
+/* Active/Open состояние */
+.select--normal.select--open:not(.select--disabled) {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Disabled состояние */
+.select--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+
+  .select__trigger {
+    cursor: not-allowed;
+  }
+
+  .select__clear {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+/* Inline Error */
+.select--error-inline {
+  &.select--normal {
+    border-color: var(--color-danger);
+  }
+
+  &.select--clear {
+    border-bottom-color: var(--color-danger);
+  }
+
+  &.select--open {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+
+  &:hover:not(.select--disabled) {
+    border-color: var(--color-danger);
+  }
+}
+
+/* Outline Error */
+.select--error-outline {
+  &.select--normal {
+    border-color: var(--color-danger);
+    border-width: 2px;
+  }
+
+  &.select--clear {
+    border-bottom-color: var(--color-danger);
+    border-bottom-width: 2px;
+  }
+
+  &.select--open {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+
+  &:hover:not(.select--disabled) {
+    border-color: var(--color-danger);
+  }
+}
+
+/* ============================================
+   АДАПТИВНОСТЬ
+   ============================================ */
+
+@media (max-width: 768px) {
+  .select__label {
+    font-size: var(--font-size-sm);
+  }
+
+  .select--xl {
+    .select__trigger {
+      padding: 0.875rem 1.25rem;
+      font-size: var(--font-size-lg);
+    }
+  }
+
+  .select__dropdown {
+    max-height: 250px;
+  }
+}
