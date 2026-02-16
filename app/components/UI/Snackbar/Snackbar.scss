@@ -1,0 +1,217 @@
+/* Базовые стили */
+.snackbar {
+  position: fixed;
+  bottom: 8px; /* M (8px) */
+  right: 20px; /* XL (20px) */
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-width: 300px;
+  max-width: 500px;
+  padding: 1rem;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 10000;
+  font-family: var(--font-family-primary);
+  animation: snackbar-slide-in var(--transition-base) ease-out;
+}
+
+/* Иконка типа */
+.snackbar__icon {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 0.125rem;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Контент */
+.snackbar__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Заголовок */
+.snackbar__title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+  color: var(--color-text-primary);
+}
+
+/* Описание */
+.snackbar__description {
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+/* Кастомный контент */
+.snackbar__custom {
+  color: var(--color-text-primary);
+}
+
+/* Кнопки действий */
+.snackbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+/* Иконка закрытия */
+.snackbar__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  margin-left: 0.5rem;
+  margin-top: -0.25rem;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+
+  &:hover {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* ============================================
+   ТИПЫ
+   ============================================ */
+
+/* Default */
+.snackbar--default {
+  background-color: var(--color-bg-primary);
+  border-color: var(--color-border);
+
+  .snackbar__icon {
+    color: var(--color-text-secondary);
+  }
+}
+
+/* Info */
+.snackbar--info {
+  background-color: var(--color-bg-primary);
+  border-color: var(--color-info, #3b82f6);
+  border-left-width: 4px;
+
+  .snackbar__icon {
+    color: var(--color-info, #3b82f6);
+  }
+}
+
+/* Success */
+.snackbar--success {
+  background-color: var(--color-bg-primary);
+  border-color: var(--color-success, #10b981);
+  border-left-width: 4px;
+
+  .snackbar__icon {
+    color: var(--color-success, #10b981);
+  }
+}
+
+/* Warning */
+.snackbar--warning {
+  background-color: var(--color-bg-primary);
+  border-color: var(--color-warning, #f59e0b);
+  border-left-width: 4px;
+
+  .snackbar__icon {
+    color: var(--color-warning, #f59e0b);
+  }
+}
+
+/* Error */
+.snackbar--error {
+  background-color: var(--color-bg-primary);
+  border-color: var(--color-danger);
+  border-left-width: 4px;
+
+  .snackbar__icon {
+    color: var(--color-danger);
+  }
+}
+
+/* ============================================
+   АНИМАЦИИ
+   ============================================ */
+
+@keyframes snackbar-slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.snackbar-enter-active {
+  animation: snackbar-slide-in var(--transition-base) ease-out;
+}
+
+.snackbar-leave-active {
+  animation: snackbar-slide-out var(--transition-base) ease-in;
+}
+
+@keyframes snackbar-slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   АДАПТИВНОСТЬ
+   ============================================ */
+
+@media (max-width: 768px) {
+  .snackbar {
+    right: 1rem;
+    left: 1rem;
+    min-width: auto;
+    max-width: none;
+    bottom: 1rem;
+  }
+}

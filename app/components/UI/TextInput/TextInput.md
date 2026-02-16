@@ -3,53 +3,43 @@
 ### Usage example
 
 ```vue
-<TextInput v-model="value"
-           variant="normal"
-           size="m"
-           placeholder="Введите текст"
-           :show-clear="true"
-           :error="hasError"
-           error-message="Поле обязательно для заполнения"
-           @clear="handleClear"
->
-    <template #left-icon>
-        <span>🔍</span>
-    </template>
-    <template #right-content>
-        <ButtonUi size="s" variant="flat-secondary">Отправить</ButtonUi>
-    </template>
-    <template #additional>
-        <span>{{ value.length }}/100</span>
-    </template>
-</TextInput>
+<TextInput
+  v-model="text"
+  variant="normal"
+  size="m"
+  placeholder="Введите текст"
+  :show-clear="true"
+  :disabled="false"
+  :required="false"
+  @input="handleInput"
+  @change="handleChange"
+/>
 ```
 
 ### Usage with spread props
 
 ```vue
 <template>
-    <TextInput v-model="value" v-bind="inputProps" @clear="handleClear">
-        Отправить
-    </TextInput>
+  <TextInput v-bind="inputProps" @input="handleInput" />
 </template>
 
 <script setup lang="ts">
 const inputProps = {
-    variant: 'normal',
-    size: 'm',
-    type: 'email',
-    placeholder: 'Введите email',
-    showClear: true,
-    required: true,
-    // Можно также передавать HTML атрибуты
-    autocomplete: 'email',
-    'data-testid': 'email-input',
-    'aria-label': 'Email адрес'
+  modelValue: '',
+  variant: 'normal',
+  size: 'm',
+  placeholder: 'Введите email',
+  type: 'email',
+  showClear: true,
+  required: true,
+  // Можно также передавать HTML атрибуты
+  name: 'email',
+  'data-testid': 'email-input',
+  'aria-label': 'Email адрес'
 }
 
-const value = ref('')
-const handleClear = () => {
-    console.log('Input cleared')
+const handleInput = (event: Event) => {
+  console.log('Input changed', event)
 }
 </script>
 ```
@@ -58,155 +48,144 @@ const handleClear = () => {
 
 ```typescript
 modelValue?: string | number
-    // Значение input (v-model)
-    // Default: ''
+  // Значение input (v-model)
+  // Default: ''
 
 variant?: 'normal' | 'clear'
-    // Вариант отображения
-    // 'normal' - Обычный input с рамкой
-    // 'clear' - Input без рамки, только нижняя граница
-    // Default: 'normal'
+  // Вариант отображения
+  // 'normal' - Есть обводка (1px), внутренние отступы, скругления. Используется в формах
+  // 'clear' - Нет обводки, контент прижат к краям. Используется для минимализма
+  // Default: 'normal'
 
 size?: 's' | 'm' | 'l' | 'xl'
-    // Размер input
-    // 's' - Small (для компактных форм)
-    // 'm' - Medium (основной размер)
-    // 'l' - Large (для выделения важных полей)
-    // 'xl' - Extra Large (для лендингов)
-    // Default: 'm'
+  // Размер input
+  // 's' - Small
+  // 'm' - Medium
+  // 'l' - Large
+  // 'xl' - Extra Large
+  // Default: 'm'
 
 state?: 'suggest' | 'default' | 'hover' | 'active' | 'disabled' | 'inline-error' | 'outline-error'
-    // Состояние input
-    // 'suggest' - Подсказка (подсветка)
-    // 'default' - Обычное состояние
-    // 'hover' - При наведении
-    // 'active' - Активное (в фокусе)
-    // 'disabled' - Отключено
-    // 'inline-error' - Ошибка (inline режим)
-    // 'outline-error' - Ошибка (outline режим)
-    // Default: 'default'
+  // Состояние input
+  // Default: 'default'
 
 error?: boolean
-    // Наличие ошибки валидации
-    // Default: false
+  // Наличие ошибки
+  // Default: false
 
 errorMessage?: string
-    // Текст сообщения об ошибке (отображается в inline режиме)
-    // Default: ''
+  // Текст сообщения об ошибке
+  // Default: ''
 
 errorMode?: 'inline' | 'outline'
-    // Режим отображения ошибки
-    // 'inline' - Сообщение об ошибке под полем
-    // 'outline' - Только подсветка рамки
-    // Default: 'inline'
+  // Режим отображения ошибки
+  // 'inline' - Иконка ошибки внутри поля
+  // 'outline' - Текст ошибки выводится снизу слева
+  // Default: 'inline'
 
 showClear?: boolean
-    // Показывать кнопку очистки (показывается при наличии значения)
-    // Default: true
+  // Показывать кнопку очистки
+  // Default: true
 
 type?: string
-    // Тип HTML input (text, email, password, number, tel, url, search и т.д.)
-    // Default: 'text'
+  // Тип input (text, email, password, number, tel, url, search и т.д.)
+  // Default: 'text'
 
 placeholder?: string
-    // Placeholder текст
-    // Default: ''
+  // Placeholder текст
+  // Default: ''
 
 disabled?: boolean
-    // Отключенное состояние
-    // Default: false
+  // Отключенное состояние
+  // Default: false
 
 readonly?: boolean
-    // Только для чтения
-    // Default: false
-
-required?: boolean
-    // Обязательное поле
-    // Default: false
+  // Только для чтения
+  // Default: false
 
 maxlength?: number
-    // Максимальная длина ввода
-    // Default: undefined
+  // Максимальная длина
+  // Default: undefined
 
 minlength?: number
-    // Минимальная длина ввода
-    // Default: undefined
+  // Минимальная длина
+  // Default: undefined
 
 pattern?: string
-    // Регулярное выражение для валидации
-    // Default: undefined
+  // Паттерн для валидации
+  // Default: undefined
+
+required?: boolean
+  // Обязательное поле
+  // Default: false
 
 autocomplete?: string
-    // Автозаполнение (on, off, email, username и т.д.)
-    // Default: undefined
+  // Автозаполнение
+  // Default: undefined
 
 autofocus?: boolean
-    // Автофокус при загрузке
-    // Default: false
+  // Автофокус при монтировании
+  // Default: false
 
 name?: string
-    // Имя поля (для форм)
-    // Default: undefined
+  // Имя поля (для форм)
+  // Default: undefined
 
 ariaLabel?: string
-    // ARIA label для доступности
-    // Default: undefined
+  // ARIA label для доступности
+  // Default: undefined
 
 ariaDescribedBy?: string
-    // ARIA describedby для доступности
-    // Default: undefined
+  // ARIA described by для доступности
+  // Default: undefined
 
 inputId?: string
-    // ID для input элемента (если не указан, генерируется автоматически)
-    // Default: undefined
+  // ID для input элемента
+  // Default: undefined (генерируется автоматически)
 ```
 
 ### Events
 
 ```typescript
 @update:modelValue: (value: string | number) => void
-    // Событие обновления значения (v-model)
+  // Событие обновления значения (v-model)
 
 @input: (event: Event) => void
-    // Событие ввода текста
+  // Событие ввода текста
 
 @change: (event: Event) => void
-    // Событие изменения значения
+  // Событие изменения значения
 
 @focus: (event: FocusEvent) => void
-    // Событие получения фокуса
+  // Событие получения фокуса
 
 @blur: (event: FocusEvent) => void
-    // Событие потери фокуса
+  // Событие потери фокуса
 
 @clear: () => void
-    // Событие очистки поля
+  // Событие очистки значения
 
 @keydown: (event: KeyboardEvent) => void
-    // Событие нажатия клавиши
+  // Событие нажатия клавиши
 
 @keyup: (event: KeyboardEvent) => void
-    // Событие отпускания клавиши
+  // Событие отпускания клавиши
 ```
 
 ### Slots
 
-```typescript
-left-icon
-    // Иконка слева от input
-    // Пример: <template #left-icon><Icon name="search" /></template>
+```vue
+#left-icon
+  // Иконка слева от input
 
-right-content
-    // Контент справа (кнопки, иконки, максимум 2 элемента)
-    // Пример: <template #right-content><ButtonUi>Отправить</ButtonUi></template>
+#right-content
+  // Контент справа (кнопки, иконки)
 
-additional
-    // Дополнительный контент справа (счетчик, единицы измерения)
-    // Пример: <template #additional><span>{{ value.length }}/100</span></template>
+#additional
+  // Дополнительный контент справа (счетчик, единицы)
 
-clear-button
-    // Кастомная кнопка очистки
-    // Пример: <template #clear-button><Icon name="close" /></template>
+#clear-button
+  // Кастомная кнопка очистки
 ```
 
 ### Examples
@@ -214,148 +193,139 @@ clear-button
 #### Basic usage
 
 ```vue
-<TextInput v-model="value" placeholder="Введите текст" />
+<TextInput v-model="text" placeholder="Введите текст" />
 ```
 
-#### With icon
+#### With label and hint
 
 ```vue
-<TextInput v-model="value" placeholder="Поиск...">
-    <template #left-icon>
-        <span>🔍</span>
-    </template>
-</TextInput>
-```
-
-#### With button
-
-```vue
-<TextInput v-model="value" placeholder="Введите текст">
-    <template #right-content>
-        <ButtonUi size="s" variant="primary">Отправить</ButtonUi>
-    </template>
-</TextInput>
-```
-
-#### With counter
-
-```vue
-<TextInput v-model="value" placeholder="Введите текст" :maxlength="100">
-    <template #additional>
-        <span>{{ value.length }}/100</span>
-    </template>
-</TextInput>
-```
-
-#### Full example
-
-```vue
-<TextInput 
-    v-model="email"
-    variant="normal"
-    size="m"
-    type="email"
-    placeholder="Введите email"
-    :required="true"
-    :error="hasError"
-    error-message="Некорректный email"
+<TextInput
+  v-model="email"
+  label="Email"
+  placeholder="email@example.com"
+  type="email"
+  required
 >
-    <template #left-icon>
-        <span>📧</span>
-    </template>
-    <template #right-content>
-        <ButtonUi size="s" variant="primary">Отправить</ButtonUi>
-    </template>
-    <template #additional>
-        <span v-if="email.length > 0">✓</span>
-    </template>
+  <template #hint>Введите ваш email адрес</template>
 </TextInput>
 ```
 
-#### Disabled input
+#### With left icon
 
 ```vue
-<TextInput v-model="value" :disabled="true" placeholder="Отключено" />
+<TextInput v-model="search" placeholder="Поиск...">
+  <template #left-icon>
+    <span style="font-size: 1.25rem;">🔍</span>
+  </template>
+</TextInput>
 ```
 
-#### Readonly input
+#### With right button
 
 ```vue
-<TextInput v-model="value" :readonly="true" placeholder="Только чтение" />
+<TextInput v-model="text" placeholder="Введите текст">
+  <template #right-content>
+    <ButtonUi size="s" variant="flat-secondary">Отправить</ButtonUi>
+  </template>
+</TextInput>
+```
+
+#### With character counter
+
+```vue
+<TextInput
+  v-model="text"
+  placeholder="Введите текст"
+  :maxlength="100"
+>
+  <template #additional>
+    <span>{{ text.length }}/100</span>
+  </template>
+</TextInput>
 ```
 
 #### Error states
 
 ```vue
 <!-- Inline error -->
-<TextInput 
-    v-model="value"
-    :error="true"
-    error-message="Поле обязательно для заполнения"
-    error-mode="inline"
+<TextInput
+  v-model="text"
+  :error="true"
+  error-message="Поле обязательно для заполнения"
+  error-mode="inline"
 />
 
 <!-- Outline error -->
-<TextInput 
-    v-model="value"
-    :error="true"
-    error-message="Поле обязательно для заполнения"
-    error-mode="outline"
+<TextInput
+  v-model="text"
+  :error="true"
+  error-message="Поле обязательно для заполнения"
+  error-mode="outline"
 />
+```
+
+#### Disabled and readonly
+
+```vue
+<TextInput v-model="text" :disabled="true" placeholder="Отключено" />
+<TextInput v-model="text" :readonly="true" placeholder="Только чтение" />
 ```
 
 #### Different variants
 
 ```vue
-<!-- Normal variant -->
-<TextInput v-model="value1" variant="normal" placeholder="Normal" />
-
-<!-- Clear variant -->
-<TextInput v-model="value2" variant="clear" placeholder="Clear" />
+<TextInput v-model="text" variant="normal" placeholder="Normal вариант" />
+<TextInput v-model="text" variant="clear" placeholder="Clear вариант" />
 ```
 
 #### Different sizes
 
 ```vue
-<TextInput v-model="value1" size="s" placeholder="Size S" />
-<TextInput v-model="value2" size="m" placeholder="Size M" />
-<TextInput v-model="value3" size="l" placeholder="Size L" />
-<TextInput v-model="value4" size="xl" placeholder="Size XL" />
-```
-
-#### Different types
-
-```vue
-<!-- Email -->
-<TextInput v-model="email" type="email" placeholder="email@example.com" />
-
-<!-- Password -->
-<TextInput v-model="password" type="password" placeholder="Введите пароль" />
-
-<!-- Search -->
-<TextInput v-model="search" type="search" placeholder="Поиск..." />
-
-<!-- Number -->
-<TextInput v-model="number" type="number" placeholder="Введите число" />
+<TextInput v-model="text" size="s" placeholder="Размер S" />
+<TextInput v-model="text" size="m" placeholder="Размер M" />
+<TextInput v-model="text" size="l" placeholder="Размер L" />
+<TextInput v-model="text" size="xl" placeholder="Размер XL" />
 ```
 
 #### Without clear button
 
 ```vue
-<TextInput v-model="value" :show-clear="false" placeholder="Без кнопки очистки" />
+<TextInput v-model="text" :show-clear="false" placeholder="Без кнопки очистки" />
+```
+
+#### In form
+
+```vue
+<form @submit.prevent="handleSubmit">
+  <TextInput
+    v-model="form.email"
+    label="Email"
+    type="email"
+    required
+    name="email"
+  />
+  <TextInput
+    v-model="form.password"
+    label="Пароль"
+    type="password"
+    required
+    name="password"
+  />
+  <ButtonUi type="submit">Отправить</ButtonUi>
+</form>
 ```
 
 #### With HTML attributes
 
 ```vue
-<TextInput 
-    v-model="value"
-    type="email"
-    autocomplete="email"
-    name="user-email"
-    data-testid="email-input"
-    aria-label="Email адрес"
-    aria-describedby="email-hint"
+<TextInput
+  v-model="text"
+  type="email"
+  name="email"
+  autocomplete="email"
+  data-testid="email-input"
+  aria-label="Email адрес"
+  @input="handleInput"
 />
 ```
 
@@ -363,23 +333,21 @@ clear-button
 
 ```vue
 <template>
-    <TextInput v-model="value" v-bind="inputConfig" @clear="handleClear" />
+  <TextInput v-bind="inputConfig" @input="handleInput" />
 </template>
 
 <script setup lang="ts">
 const inputConfig = {
-    variant: 'normal',
-    size: 'm',
-    type: 'email',
-    placeholder: 'Введите email',
-    showClear: true,
-    required: true,
-    autocomplete: 'email'
+  modelValue: '',
+  variant: 'normal',
+  size: 'm',
+  placeholder: 'Введите текст',
+  showClear: true,
+  required: false
 }
 
-const value = ref('')
-const handleClear = () => {
-    console.log('Cleared')
+const handleInput = (event: Event) => {
+  console.log('Input changed', event)
 }
 </script>
 ```

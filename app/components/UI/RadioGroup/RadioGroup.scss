@@ -1,0 +1,49 @@
+/* Базовые стили */
+.radio-group {
+  display: flex;
+  font-family: var(--font-family-primary);
+}
+
+/* Вертикальное расположение (по умолчанию) */
+.radio-group--vertical {
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Горизонтальное расположение */
+.radio-group--horizontal {
+  flex-direction: row;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Размеры */
+.radio-group--m {
+  gap: 0.75rem;
+
+  &.radio-group--horizontal {
+    gap: 1.5rem;
+  }
+}
+
+.radio-group--l {
+  gap: 1rem;
+
+  &.radio-group--horizontal {
+    gap: 2rem;
+  }
+}
+
+/* Disabled состояние */
+.radio-group--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .radio-group--horizontal {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
