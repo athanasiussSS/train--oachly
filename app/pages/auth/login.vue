@@ -1,7 +1,9 @@
 <template>
-  <AuthWrapper>
-    <Form title="Войти"></Form>
-  </AuthWrapper>
+  <div class="login-page">
+    <AuthWrapper>
+      <Form initial-mode="login" />
+    </AuthWrapper>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -13,3 +15,12 @@ definePageMeta({
 })
 </script>
 
+<style scoped lang="scss">
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: rem(20);
+}
+</style>

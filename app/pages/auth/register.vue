@@ -1,35 +1,14 @@
 <template>
-  <div>
-    <!-- Страница регистрации /register -->
-    
-    <!-- Шаг 1: Данные -->
-    <!-- 
-      Форма:
-      - Email или телефон (с валидацией)
-      - Пароль (с подсказкой требований)
-      - Имя
-      - Кнопка [Далее]
-    -->
-    
-    <!-- Шаг 2: Подтверждение -->
-    <!-- 
-      Форма:
-      - Сообщение: "Код отправлен на Email/SMS"
-      - Поле ввода кода (6 цифр)
-      - Таймер повторной отправки (5:00 сек)
-      - Кнопка "Отправить код повторно" (неактивна во время таймера)
-      - Чекбокс: "Согласен с условиями и политикой"
-      - Кнопка [Создать аккаунт]
-      
-      После успешной регистрации:
-      - Аккаунт создан (роль: Ученик)
-      - Email помечен как подтверждённый
-      - Редирект в Личный Кабинет (режим "Ученик")
-    -->
+  <div class="register-page">
+    <AuthWrapper>
+      <Form initial-mode="register" />
+    </AuthWrapper>
   </div>
 </template>
 
 <script setup lang="ts">
+import AuthWrapper from '~/components/auth/AuthWrapper.vue';
+import Form from '~/components/auth/Form.vue';
 // Использование layout для страниц авторизации
 definePageMeta({
   layout: 'authorization'
@@ -46,5 +25,11 @@ definePageMeta({
 </script>
 
 <style scoped lang="scss">
-// Стили страницы регистрации
+.register-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: rem(20);
+}
 </style>
