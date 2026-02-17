@@ -1,1 +1,9 @@
-// SCSS миксины
+// SCSS миксины и функции
+
+// Функция для конвертации px в rem
+// @param {Number} $pixels - значение в пикселях
+// @param {Number} $base - базовый размер шрифта (по умолчанию 16px)
+// @return {String} значение в rem
+@function rem($pixels, $base: 16) {
+  @return ($pixels / $base) * 1rem;
+}

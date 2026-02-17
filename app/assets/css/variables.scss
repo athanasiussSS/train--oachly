@@ -1,9 +1,13 @@
 // CSS переменные (Custom Properties)
+// ============================================
+
+// СВЕТЛАЯ ТЕМА (по умолчанию)
+// ============================================
 :root {
   // Базовый размер шрифта для rem расчетов
   --base-font-size: 16px;
   
-  // Цвета
+  // Цвета (одинаковые для обеих тем)
   --color-primary: #3b82f6;
   --color-secondary: #8b5cf6;
   --color-success: #10b981;
@@ -11,17 +15,17 @@
   --color-warning: #f59e0b;
   --color-info: #06b6d4;
   
-  // Текст
-  --color-text-primary: #1f2937;
+  // Текст (светлая тема)
+  --color-text-primary: #141414;
   --color-text-secondary: #6b7280;
   --color-text-muted: #9ca3af;
   
-  // Фон
-  --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f9fafb;
-  --color-bg-tertiary: #f3f4f6;
+  // Фон (светлая тема)
+  --color-bg-primary: #f5f5f5;
+  --color-bg-secondary: #443dd0;
+  --color-bg-tertiary: #00a6d3;
   
-  // Границы
+  // Границы (светлая тема)
   --color-border: #e5e7eb;
   --color-border-light: #f3f4f6;
   
@@ -62,7 +66,7 @@
   --radius-xl: 1rem;       /* 16px */
   --radius-full: 9999px;
   
-  // Тени
+  // Тени (светлая тема)
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -83,16 +87,56 @@
   --z-tooltip: 1070;
 }
 
-/* Темная тема (опционально) */
+// ============================================
+// ТЕМНАЯ ТЕМА
+// ============================================
+// Применяется когда на <html> или <body> есть класс .dark
+.dark {
+  // Текст (темная тема)
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-text-muted: #9ca3af;
+  
+  // Фон (темная тема)
+  --color-bg-primary: #111827;
+  --color-bg-secondary: #1f2937;
+  --color-bg-tertiary: #374151;
+  
+  // Границы (темная тема)
+  --color-border: #4b5563;
+  --color-border-light: #374151;
+  
+  // Тени (темная тема - более яркие для контраста)
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.5);
+}
+
+// ============================================
+// АВТОМАТИЧЕСКОЕ ОПРЕДЕЛЕНИЕ ТЕМЫ СИСТЕМЫ
+// ============================================
+// Если пользователь не выбрал тему вручную, используем системную
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light):not(.dark) {
+    // Текст (темная тема)
     --color-text-primary: #f9fafb;
     --color-text-secondary: #d1d5db;
     --color-text-muted: #9ca3af;
+    
+    // Фон (темная тема)
     --color-bg-primary: #111827;
     --color-bg-secondary: #1f2937;
     --color-bg-tertiary: #374151;
+    
+    // Границы (темная тема)
     --color-border: #4b5563;
     --color-border-light: #374151;
+    
+    // Тени
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.5);
   }
 }

@@ -17,5 +17,17 @@ export default defineNuxtConfig({
   },
   
   // Импорт глобальных стилей
-  css: ['~/assets/css/main.scss']
+  css: ['~/assets/css/main.scss'],
+  
+  // Настройка Vite для SCSS
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          // Автоматически импортировать миксины и функции во все SCSS файлы
+          additionalData: `@import "~/assets/css/mixins.scss";`
+        }
+      }
+    }
+  }
 })

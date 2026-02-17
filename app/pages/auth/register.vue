@@ -30,6 +30,11 @@
 </template>
 
 <script setup lang="ts">
+// Использование layout для страниц авторизации
+definePageMeta({
+  layout: 'authorization'
+})
+
 // Логика регистрации
 // - Управление шагами (step 1, step 2)
 // - Валидация формы на каждом шаге
