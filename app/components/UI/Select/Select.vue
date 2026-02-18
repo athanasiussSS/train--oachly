@@ -746,5 +746,5 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-@use "./Select.scss";
+@import "./Select.scss";
 </style>

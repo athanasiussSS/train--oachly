@@ -20,13 +20,6 @@
   align-items: center;
   padding: 20px;
   
-  background: linear-gradient(
-    to right,
-    var(--color-bg-primary) 0%,
-    var(--color-bg-primary) 0%,
-    var(--color-bg-primary) 50%,
-    var(--color-bg-secondary) 50%,
-    var(--color-bg-secondary) 100%
-  );
+  background-color: var(--color-bg-primary);
 }
 </style>

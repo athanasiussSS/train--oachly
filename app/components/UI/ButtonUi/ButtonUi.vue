@@ -96,5 +96,5 @@ const emit = defineEmits<{
 </script>
 
 <style scoped lang="scss">
-@use "./ButtonUi.scss";
+@import "./ButtonUi.scss";
 </style>

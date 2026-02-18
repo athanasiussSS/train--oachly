@@ -261,5 +261,5 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-@use "./Popup.scss";
+@import "./Popup.scss";
 </style>

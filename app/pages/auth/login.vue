@@ -1,22 +1,15 @@
 <template>
   <AuthWrapper>
-    <!-- Контент формы входа будет здесь -->
+    <Form title="Войти"></Form>
   </AuthWrapper>
 </template>
 
 <script setup lang="ts">
+import AuthWrapper from '~/components/auth/AuthWrapper.vue';
+import Form from '~/components/auth/Form.vue';
+
 definePageMeta({
   layout: 'authorization'
 })
-
-// Логика авторизации
-// - Валидация формы
-// - Отправка запроса на бекенд
-// - Обработка ответа (токен + данные пользователя)
-// - Сохранение в store
-// - Редирект в ЛК
 </script>
 
-<style scoped lang="scss">
-// Стили страницы авторизации
-</style>

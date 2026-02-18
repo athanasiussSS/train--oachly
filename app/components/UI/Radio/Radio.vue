@@ -180,5 +180,5 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-@use "./Radio.scss";
+@import "./Radio.scss";
 </style>

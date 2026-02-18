@@ -128,5 +128,5 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-@use "./Tooltip.scss";
+@import "./Tooltip.scss";
 </style>

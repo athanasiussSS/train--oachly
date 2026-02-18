@@ -283,5 +283,5 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-@use "./Checkbox.scss";
+@import "./Checkbox.scss";
 </style>

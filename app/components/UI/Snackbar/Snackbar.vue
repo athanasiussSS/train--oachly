@@ -364,5 +364,5 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-@use "./Snackbar.scss";
+@import "./Snackbar.scss";
 </style>

@@ -13,9 +13,10 @@ defineProps({
 <style scoped lang="scss">
 .wrapper {
     width: 100%;
-    max-width: rem(500); // 600px
-    height: 600px;
+    max-width: rem(400); // 600px
+    min-height: rem(400);
     background-color: var(--color-bg-tertiary);
     border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
 }
 </style>

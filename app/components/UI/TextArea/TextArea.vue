@@ -415,5 +415,5 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-@use "./TextArea.scss";
+@import "./TextArea.scss";
 </style>

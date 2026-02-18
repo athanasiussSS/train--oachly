@@ -118,6 +118,8 @@
    ============================================ */
 
 .text-input--s {
+  border-radius: var(--radius-sm);
+  
   .text-input__input {
     padding: 0.5rem 0.75rem;
     font-size: var(--font-size-sm);
@@ -142,6 +144,8 @@
 }
 
 .text-input--m {
+  border-radius: var(--radius-md);
+  
   .text-input__input {
     padding: 0.625rem 1rem;
     font-size: var(--font-size-base);
@@ -166,6 +170,8 @@
 }
 
 .text-input--l {
+  border-radius: var(--radius-lg);
+  
   .text-input__input {
     padding: 0.75rem 1.25rem;
     font-size: var(--font-size-lg);
@@ -190,6 +196,8 @@
 }
 
 .text-input--xl {
+  border-radius: var(--radius-xl);
+  
   .text-input__input {
     padding: 1rem 1.5rem;
     font-size: var(--font-size-xl);
@@ -221,7 +229,6 @@
 .text-input--normal {
   background-color: var(--color-bg-primary);
   border: 1px solid var(--color-border);
-  border-radius: inherit;
 
   &:hover:not(.text-input--disabled):not(.text-input--readonly) {
     border-color: var(--color-text-secondary);
@@ -279,17 +286,6 @@
   background-color: var(--color-bg-secondary);
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.05);
-}
-
-/* Hover состояние */
-.text-input--normal:hover:not(.text-input--disabled):not(.text-input--readonly) {
-  border-color: var(--color-text-secondary);
-}
-
-/* Active/Focused состояние */
-.text-input--normal.text-input--focused:not(.text-input--disabled) {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 /* Disabled состояние */

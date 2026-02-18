@@ -224,5 +224,5 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-@use "./TextInput.scss";
+@import "./TextInput.scss";
 </style>

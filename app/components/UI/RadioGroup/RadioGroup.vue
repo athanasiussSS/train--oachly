@@ -195,5 +195,5 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@use "./RadioGroup.scss";
+@import "./RadioGroup.scss";
 </style>
