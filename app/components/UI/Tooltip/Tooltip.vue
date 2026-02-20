@@ -33,30 +33,45 @@
   <Popup
     ref="popupRef"
     :trigger="'hover'"
-    :position="position"
-    :show-arrow="showArrow"
+    :position="computedPosition"
     :offset="offset"
-    :hover-delay="hoverDelay"
-    :hide-delay="0"
-    :close-on-click-outside="false"
-    :close-on-escape="false"
     :disabled="disabled"
     @open="handleOpen"
     @close="handleClose"
   >
     <template #trigger>
-      <slot />
+      <slot>
+        <!-- Дефолтная иконка вопросительного знака -->
+        <span 
+          v-if="useDefaultTrigger"
+          class="tooltip__default-trigger"
+          :aria-label="content || 'Подсказка'"
+        >
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 16 16" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+            class="tooltip__icon"
+          >
+            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <path d="M6.5 6.5C6.5 5.67157 7.17157 5 8 5C8.82843 5 9.5 5.67157 9.5 6.5C9.5 7.32843 8.82843 8 8 8V9.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <circle cx="8" cy="11.5" r="0.75" fill="currentColor"/>
+          </svg>
+        </span>
+      </slot>
     </template>
     <template #content>
       <slot name="content">
-        <span v-if="content">{{ content }}</span>
+        <span class="content__text" v-if="content">{{ content }}</span>
       </slot>
     </template>
   </Popup>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, useSlots, computed } from 'vue'
 import Popup from '../Popup/Popup.vue'
 
 interface TooltipProps {
@@ -78,18 +93,19 @@ interface TooltipProps {
     | 'right-top'
     | 'right-bottom'
 
-  // Хвостик
-  showArrow?: boolean
-
   // Отступ от триггера
   offset?: number
-
-  // Задержка перед показом (в миллисекундах)
-  hoverDelay?: number
 
   // Отключить
   disabled?: boolean
 }
+
+const slots = useSlots()
+const useDefaultTrigger = computed(() => !slots.default)
+
+const computedPosition = computed(() => 
+  props.position?.split('-')[0] as 'top' | 'bottom' | 'left' | 'right' || 'top'
+)
 
 interface TooltipEmits {
   (e: 'open'): void
@@ -99,9 +115,7 @@ interface TooltipEmits {
 const props = withDefaults(defineProps<TooltipProps>(), {
   content: '',
   position: 'top',
-  showArrow: true,
   offset: 8,
-  hoverDelay: 250,
   disabled: false
 })
 
@@ -109,14 +123,8 @@ const emit = defineEmits<TooltipEmits>()
 
 const popupRef = ref<InstanceType<typeof Popup> | null>(null)
 
-// Обработчики событий
-const handleOpen = () => {
-  emit('open')
-}
-
-const handleClose = () => {
-  emit('close')
-}
+const handleOpen = () => emit('open')
+const handleClose = () => emit('close')
 
 // Публичные методы
 defineExpose({

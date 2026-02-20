@@ -35,16 +35,13 @@ $sizes: (
 }
 
 // Миксин для вариантов ссылок
-@mixin link-variant($color-var, $hover-color) {
+@mixin link-variant($color-var) {
   color: var($color-var);
-  
-  &:hover:not(.link--disabled) {
-    color: $hover-color;
-  }
   
   &.link--underline {
     text-decoration: underline;
     text-underline-offset: 0.125rem;
+    text-decoration-color: var($color-var);
     
     &:hover:not(.link--disabled) {
       text-decoration-thickness: 0.125rem;
@@ -57,25 +54,22 @@ $sizes: (
     &:hover:not(.link--disabled) {
       text-decoration: underline;
       text-underline-offset: 0.125rem;
+      text-decoration-color: var($color-var);
     }
   }
 }
 
 // Варианты стилей
 .link--primary {
-  @include link-variant(--color-primary, #4c06c7);
+  @include link-variant(--color-primary);
 }
 
 .link--secondary {
-  @include link-variant(--color-secondary, #7c3aed);
+  @include link-variant(--color-secondary);
 }
 
 .link--muted {
-  color: var(--color-text-secondary);
-  
-  &:hover:not(.link--disabled) {
-    color: var(--color-text-primary);
-  }
+  color: inherit;
   
   &.link--underline {
     text-decoration: underline;
@@ -83,7 +77,6 @@ $sizes: (
     text-decoration-color: var(--color-text-muted);
     
     &:hover:not(.link--disabled) {
-      text-decoration-color: var(--color-text-primary);
       text-decoration-thickness: 0.125rem;
     }
   }
@@ -94,15 +87,15 @@ $sizes: (
     &:hover:not(.link--disabled) {
       text-decoration: underline;
       text-underline-offset: 0.125rem;
-      text-decoration-color: var(--color-text-primary);
+      text-decoration-color: var(--color-text-muted);
     }
   }
 }
 
-.link--success { @include link-variant(--color-success, #059669); }
-.link--danger { @include link-variant(--color-danger, #dc2626); }
-.link--warning { @include link-variant(--color-warning, #d97706); }
-.link--info { @include link-variant(--color-info, #0891b2); }
+.link--success { @include link-variant(--color-success); }
+.link--danger { @include link-variant(--color-danger); }
+.link--warning { @include link-variant(--color-warning); }
+.link--info { @include link-variant(--color-info); }
 
 // Состояния
 .link--disabled {

@@ -80,7 +80,8 @@ disabled?: boolean
 
 ```vue
 #default
-  // Элемент-триггер (обязательный слот)
+  // Элемент-триггер (необязательный слот)
+  // Если не указан, используется дефолтная иконка вопроса
   // Обычно это кнопка или другой интерактивный элемент
 
 #content
@@ -111,9 +112,13 @@ updatePosition(): void
 #### Basic usage
 
 ```vue
+<!-- С кастомным триггером -->
 <Tooltip content="Подсказка">
   <ButtonUi>Наведите на меня</ButtonUi>
 </Tooltip>
+
+<!-- С дефолтной иконкой вопроса (без триггера) -->
+<Tooltip content="Подсказка" />
 ```
 
 #### Different positions
@@ -209,6 +214,9 @@ updatePosition(): void
 <Tooltip content="Дополнительная информация" position="right">
   <span style="font-size: 1.5rem; cursor: pointer;">ℹ️</span>
 </Tooltip>
+
+<!-- С дефолтной иконкой вопроса (используется в TextInput) -->
+<Tooltip content="Латиница, одна заглавная, одна цифра, один знак препинания минимум 6 символов" />
 ```
 
 #### Usage examples

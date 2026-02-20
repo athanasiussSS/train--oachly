@@ -1,5 +1,27 @@
 <template>
-  <div class="text-input" :class="inputClasses">
+  <div class="text-input-wrapper">
+    <!-- Label над полем -->
+    <label 
+      v-if="label || slots.label" 
+      :for="inputId" 
+      class="text-input__label"
+    >
+      <span class="text-input__label-text">
+        <slot name="label">{{ label }}</slot>
+      </span>
+      <Tooltip 
+        v-if="tooltip" 
+        :content="tooltip"
+        position="top"
+        class="text-input__tooltip"
+      />
+    </label>
+    
+    <div 
+      class="text-input" 
+      :class="inputClasses"
+      :data-error="errorMode === 'inline' && hasError ? displayErrorMessage : ''"
+    >
     <!-- Иконка слева -->
     <div v-if="slots['left-icon']" class="text-input__left-icon">
       <slot name="left-icon" />
@@ -58,15 +80,13 @@
       <slot name="additional" />
     </div>
   </div>
-
-  <!-- Сообщение об ошибке (inline) -->
-  <div v-if="error && errorMode === 'inline'" class="text-input__error-message">
-    {{ errorMessage }}
-  </div>
+</div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useId, useSlots } from 'vue'
+import { computed, ref, useId, useSlots, watch } from 'vue'
+import { useFieldValidation, type ValidationRule, fieldTypeRules, validationRules } from '~/composables/useFieldValidation'
+import Tooltip from '../Tooltip/Tooltip.vue'
 
 interface Props {
   // v-model
@@ -81,13 +101,24 @@ interface Props {
   // Состояния
   state?: 'suggest' | 'default' | 'hover' | 'active' | 'disabled' | 'inline-error' | 'outline-error'
 
-  // Валидация
+  // Валидация (ручное управление)
   error?: boolean
   errorMessage?: string
   errorMode?: 'inline' | 'outline'
 
+  // Встроенная валидация
+  validate?: boolean
+  validationRules?: ValidationRule[]
+  validateOnBlur?: boolean
+  validateOnInput?: boolean
+  validateOnMount?: boolean
+
   // Кнопка очистки
   showClear?: boolean
+
+  // Label
+  label?: string
+  tooltip?: string
 
   // HTML атрибуты
   type?: string
@@ -116,6 +147,11 @@ const props = withDefaults(defineProps<Props>(), {
   error: false,
   errorMessage: '',
   errorMode: 'inline',
+  validate: false,
+  validationRules: () => [],
+  validateOnBlur: true,
+  validateOnInput: false,
+  validateOnMount: false,
   showClear: true,
   type: 'text',
   placeholder: '',
@@ -134,6 +170,8 @@ const emit = defineEmits<{
   clear: []
   keydown: [event: KeyboardEvent]
   keyup: [event: KeyboardEvent]
+  'validation-error': [error: string]
+  'validation-success': []
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -142,18 +180,67 @@ const generatedId = useId()
 const slots = useSlots()
 const inputId = computed(() => props.inputId || `text-input-${generatedId}`)
 
-// Вычисляемое значение для отображения кнопки очистки
-const showClearButton = computed(() => {
-  return props.showClear && 
-         !props.disabled && 
-         !props.readonly && 
-         (props.modelValue !== '' && props.modelValue !== null && props.modelValue !== undefined)
+// Встроенная валидация
+const valueRef = ref(props.modelValue)
+
+watch(() => props.modelValue, (newValue) => {
+  valueRef.value = newValue
 })
 
-// Вычисляемое состояние ошибки
-const hasError = computed(() => {
-  return props.error || props.state === 'inline-error' || props.state === 'outline-error'
+const validationRulesComputed = computed((): ValidationRule[] => {
+  if (!props.validate) return []
+  if (props.validationRules?.length) return props.validationRules
+  const typeRules = fieldTypeRules[props.type]
+  if (typeRules) return typeRules
+  return props.required ? [validationRules.required()] : []
 })
+
+// Используем composable для валидации
+const {
+  error: validationError,
+  touched,
+  isValid,
+  validate: validateField,
+  reset: resetValidation,
+  handleBlur: handleValidationBlur
+} = useFieldValidation(
+  valueRef,
+  validationRulesComputed,
+  {
+    validateOnBlur: props.validateOnBlur,
+    validateOnInput: props.validateOnInput,
+    validateOnMount: props.validateOnMount
+  }
+)
+
+watch(validationRulesComputed, () => {
+  if (props.validate && touched.value) {
+    validateField()
+  }
+}, { deep: true })
+
+watch(validationError, (error) => {
+  if (error) {
+    emit('validation-error', error)
+  } else if (touched.value) {
+    emit('validation-success')
+  }
+})
+
+const showClearButton = computed(() => 
+  props.showClear && !props.disabled && !props.readonly && !!props.modelValue
+)
+
+const hasError = computed(() => 
+  props.error || 
+  (props.validate && !!validationError.value) ||
+  props.state === 'inline-error' || 
+  props.state === 'outline-error'
+)
+
+const displayErrorMessage = computed(() => 
+  props.error ? props.errorMessage : validationError.value || ''
+)
 
 // Классы компонента
 const inputClasses = computed(() => {
@@ -174,15 +261,16 @@ const inputClasses = computed(() => {
   ]
 })
 
-// ARIA label для кнопки очистки
-const clearButtonAriaLabel = computed(() => {
-  return props.ariaLabel ? `Очистить ${props.ariaLabel}` : 'Очистить поле'
-})
+const clearButtonAriaLabel = computed(() => 
+  props.ariaLabel ? `Очистить ${props.ariaLabel}` : 'Очистить поле'
+)
 
 // Обработчики событий
 const handleInput = (event: Event) => {
   const target = event.target as HTMLInputElement
-  emit('update:modelValue', target.value)
+  const newValue = target.value
+  valueRef.value = newValue
+  emit('update:modelValue', newValue)
   emit('input', event)
 }
 
@@ -197,13 +285,15 @@ const handleFocus = (event: FocusEvent) => {
 
 const handleBlur = (event: FocusEvent) => {
   isFocused.value = false
+  if (props.validate) {
+    handleValidationBlur()
+  }
   emit('blur', event)
 }
 
 const handleClear = () => {
   emit('update:modelValue', '')
   emit('clear')
-  // Фокус на input после очистки
   inputRef.value?.focus()
 }
 
@@ -215,11 +305,13 @@ const handleKeyup = (event: KeyboardEvent) => {
   emit('keyup', event)
 }
 
-// Публичные методы
 defineExpose({
   focus: () => inputRef.value?.focus(),
   blur: () => inputRef.value?.blur(),
-  select: () => inputRef.value?.select()
+  select: () => inputRef.value?.select(),
+  validate: () => props.validate ? validateField() : true,
+  reset: () => props.validate && resetValidation(),
+  isValid: computed(() => isValid.value)
 })
 </script>
 

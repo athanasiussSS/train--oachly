@@ -28,7 +28,7 @@ export default defineNuxtConfig({
       preprocessorOptions: {
         scss: {
           // Автоматически импортировать миксины и функции во все SCSS файлы
-          additionalData: `@import "~/assets/css/mixins.scss";`
+          additionalData: `@use "~/assets/css/mixins.scss" as *;`
         }
       }
     }

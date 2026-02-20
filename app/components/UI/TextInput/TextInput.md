@@ -142,6 +142,37 @@ ariaDescribedBy?: string
 inputId?: string
   // ID для input элемента
   // Default: undefined (генерируется автоматически)
+
+label?: string
+  // Текст label над полем
+  // Default: undefined
+
+tooltip?: string
+  // Текст подсказки, отображаемой рядом с label
+  // При наведении на иконку вопроса показывается tooltip
+  // Default: undefined
+
+// Встроенная валидация
+validate?: boolean
+  // Включить встроенную валидацию
+  // Default: false
+
+validationRules?: ValidationRule[]
+  // Массив правил валидации
+  // Если не указан, используются правила по типу поля (email, password)
+  // Default: []
+
+validateOnBlur?: boolean
+  // Валидировать при потере фокуса
+  // Default: true
+
+validateOnInput?: boolean
+  // Валидировать при вводе текста
+  // Default: false
+
+validateOnMount?: boolean
+  // Валидировать при монтировании компонента
+  // Default: false
 ```
 
 ### Events
@@ -170,6 +201,12 @@ inputId?: string
 
 @keyup: (event: KeyboardEvent) => void
   // Событие отпускания клавиши
+
+@validation-error: (error: string) => void
+  // Событие ошибки валидации
+
+@validation-success: () => void
+  // Событие успешной валидации
 ```
 
 ### Slots
@@ -186,6 +223,9 @@ inputId?: string
 
 #clear-button
   // Кастомная кнопка очистки
+
+#label
+  // Кастомный label (альтернатива пропу label)
 ```
 
 ### Examples
@@ -196,7 +236,7 @@ inputId?: string
 <TextInput v-model="text" placeholder="Введите текст" />
 ```
 
-#### With label and hint
+#### With label
 
 ```vue
 <TextInput
@@ -205,9 +245,19 @@ inputId?: string
   placeholder="email@example.com"
   type="email"
   required
->
-  <template #hint>Введите ваш email адрес</template>
-</TextInput>
+/>
+```
+
+#### With label and tooltip
+
+```vue
+<TextInput
+  v-model="password"
+  label="Пароль"
+  tooltip="Латиница, одна заглавная, одна цифра, один знак препинания минимум 6 символов"
+  type="password"
+  required
+/>
 ```
 
 #### With left icon
@@ -329,6 +379,46 @@ inputId?: string
 />
 ```
 
+#### With built-in validation
+
+```vue
+<template>
+  <TextInput
+    ref="emailInputRef"
+    v-model="email"
+    label="Email"
+    type="email"
+    :validate="true"
+    :validate-on-blur="true"
+    @validation-error="handleValidationError"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import TextInput from '~/components/UI/TextInput/TextInput.vue'
+import { validationRules } from '~/composables/useFieldValidation'
+
+const email = ref('')
+const emailInputRef = ref<InstanceType<typeof TextInput> | null>(null)
+
+// Кастомные правила валидации
+const customRules = [
+  validationRules.required('Обязательное поле'),
+  validationRules.email('Некорректный email')
+]
+
+const handleValidationError = (error: string) => {
+  console.log('Validation error:', error)
+}
+
+// Программная валидация
+const validateForm = () => {
+  emailInputRef.value?.validate()
+}
+</script>
+```
+
 #### With spread props
 
 ```vue
@@ -350,4 +440,27 @@ const handleInput = (event: Event) => {
   console.log('Input changed', event)
 }
 </script>
+```
+
+### Methods
+
+```typescript
+focus(): void
+  // Установить фокус на input
+
+blur(): void
+  // Убрать фокус с input
+
+select(): void
+  // Выделить весь текст в input
+
+validate(): boolean
+  // Валидировать поле (только если validate=true)
+  // Возвращает true если валидация прошла успешно
+
+reset(): void
+  // Сбросить состояние валидации (только если validate=true)
+
+isValid: ComputedRef<boolean>
+  // Computed свойство, указывающее на валидность поля
 ```

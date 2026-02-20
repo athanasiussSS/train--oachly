@@ -8,12 +8,18 @@
   --base-font-size: 16px;
   
   // Цвета (одинаковые для обеих тем)
-  --color-primary: #5c07e4;
+  --color-primary: #8c45ff;
+  --color-primary-hover: rgb(121, 41, 248);
   --color-secondary: #8b5cf6;
+  --color-secondary-hover: #7c3aed;
   --color-success: #10b981;
+  --color-success-hover: #059669;
   --color-danger: #ef4444;
+  --color-danger-hover: #dc2626;
   --color-warning: #f59e0b;
+  --color-warning-hover: #d97706;
   --color-info: #06b6d4;
+  --color-info-hover: #0891b2;
   
   // Текст (светлая тема)
   --color-text-primary: #141414;
@@ -98,9 +104,9 @@
   --color-text-muted: #9ca3af;
   
   // Фон (темная тема)
-  --color-bg-primary: #111827;
-  --color-bg-secondary: #1f2937;
-  --color-bg-tertiary: #374151;
+  --color-bg-primary: #1b1b1b;
+  --color-bg-secondary: #1a1a1a;
+  --color-bg-tertiary: #2e2e2e;
   
   // Границы (темная тема)
   --color-border: #4b5563;
@@ -113,30 +119,3 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.5);
 }
 
-// ============================================
-// АВТОМАТИЧЕСКОЕ ОПРЕДЕЛЕНИЕ ТЕМЫ СИСТЕМЫ
-// ============================================
-// Если пользователь не выбрал тему вручную, используем системную
-@media (prefers-color-scheme: dark) {
-  :root:not(.light):not(.dark) {
-    // Текст (темная тема)
-    --color-text-primary: #f9fafb;
-    --color-text-secondary: #d1d5db;
-    --color-text-muted: #9ca3af;
-    
-    // Фон (темная тема)
-    --color-bg-primary: #111827;
-    --color-bg-secondary: #1f2937;
-    --color-bg-tertiary: #374151;
-    
-    // Границы (темная тема)
-    --color-border: #4b5563;
-    --color-border-light: #374151;
-    
-    // Тени
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.4);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.5);
-  }
-}

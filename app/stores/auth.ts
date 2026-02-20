@@ -3,18 +3,38 @@ import { defineStore } from 'pinia'
 import type { User } from '~/types/auth'
 
 export const useAuthStore = defineStore('auth', () => {
-  // ========== СОСТОЯНИЕ ==========
-  // user - текущий пользователь (null если не авторизован)
-  // token - токен доступа (access token)
-  // isLoading - статус загрузки (для показа спиннера)
-  
-  // ========== ACTIONS ==========
-  // setUser(user) - установить данные пользователя
-  // setToken(token) - установить токен
-  // clearAuth() - очистить токен и данные (для logout)
-  // isAuthenticated() - проверка авторизации (есть ли токен и user)
-  
+  const user = ref<User | null>(null)
+  const token = ref<string | null>(null)
+  const isLoading = ref(false)
+
+  const setUser = (userData: User | null) => {
+    user.value = userData
+  }
+
+  const setToken = (tokenValue: string | null) => {
+    token.value = tokenValue
+    if (tokenValue) {
+      localStorage.setItem('auth_token', tokenValue)
+    } else {
+      localStorage.removeItem('auth_token')
+    }
+  }
+
+  const clearAuth = () => {
+    user.value = null
+    token.value = null
+    localStorage.removeItem('auth_token')
+  }
+
+  const isAuthenticated = () => !!(token.value && user.value)
+
   return {
-    // State и actions
+    user,
+    token,
+    isLoading,
+    setUser,
+    setToken,
+    clearAuth,
+    isAuthenticated
   }
 })
